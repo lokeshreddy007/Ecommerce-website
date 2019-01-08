@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 03, 2019 at 09:57 AM
+-- Generation Time: Jan 04, 2019 at 10:15 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -44,17 +44,20 @@ CREATE TABLE `bookedproducts` (
   `vendorname` varchar(255) NOT NULL,
   `pincode` int(11) NOT NULL,
   `faltnumber` int(11) NOT NULL,
-  `Transactionid` int(11) NOT NULL,
+  `Transactionid` varchar(255) NOT NULL,
   `date` int(11) NOT NULL,
-  `price` int(11) NOT NULL
+  `price` int(11) NOT NULL,
+  `cartid` int(11) NOT NULL,
+  `productimg` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `bookedproducts`
 --
 
-INSERT INTO `bookedproducts` (`idbookedproducts`, `userid`, `username`, `usermail`, `productid`, `productname`, `productprice`, `balval`, `finalbal`, `dateone`, `datelast`, `vendorid`, `vendorname`, `pincode`, `faltnumber`, `Transactionid`, `date`, `price`) VALUES
-(24, 25, 'ram', 'vinay@gmal.com', '2', 'water', '40', '1000', '960', '2019-01-03', '2019-01-06', 4, 'lokesh', 517416, 0, 0, 4, 10);
+INSERT INTO `bookedproducts` (`idbookedproducts`, `userid`, `username`, `usermail`, `productid`, `productname`, `productprice`, `balval`, `finalbal`, `dateone`, `datelast`, `vendorid`, `vendorname`, `pincode`, `faltnumber`, `Transactionid`, `date`, `price`, `cartid`, `productimg`) VALUES
+(28, 0, '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', 0, '', 0, 0, '', 0, 0, 0, ''),
+(29, 27, 'vinay', 'vinay@gmal.com', '1', 'milk', '218', '1000', '782', '2019-01-04', '2019-01-05', 2, 'vinay', 517416, 0, '04012019132803', 2, 109, 105, 'fileupload/Tulips.jpg');
 
 -- --------------------------------------------------------
 
@@ -85,7 +88,7 @@ CREATE TABLE `cartdetails` (
 --
 
 INSERT INTO `cartdetails` (`id`, `userid`, `username`, `usermail`, `productid`, `produtname`, `productimg`, `productprice`, `productstratdate`, `productenddate`, `description`, `days`, `pincode`, `totalprice`, `phonenum`) VALUES
-(100, 25, 'ram', 'vinay@gmal.com', 2, 'water', 'fileupload/Penguins.jpg', 10, '2019-01-03', '2019-01-06', '  \r\n    2      ', 4, 517416, 40, 0);
+(105, 27, 'vinay', 'vinay@gmal.com', 1, 'milk', 'fileupload/Tulips.jpg', 109, '2019-01-04', '2019-01-05', '  \r\n          good', 2, 517416, 218, 0);
 
 -- --------------------------------------------------------
 
@@ -141,7 +144,7 @@ CREATE TABLE `uf` (
 --
 
 INSERT INTO `uf` (`iduf`, `a`, `b`, `c`, `d`, `e`, `f`, `g`, `h`, `i`) VALUES
-(25, 'ram', 'vinay', 'vinay@gmal.com', 'ewfwef', '', '', '', '345345', '517416');
+(27, 'vinay', 'vinay', 'vinay@gmal.com', 'ewfwef', '', '', '', '567', '517416');
 
 -- --------------------------------------------------------
 
@@ -194,7 +197,7 @@ CREATE TABLE `wallet` (
 --
 
 INSERT INTO `wallet` (`id`, `userid`, `username`, `usermail`, `depositdate`, `amount`, `utilized`, `balance`, `transactionid`) VALUES
-(11, 25, 'ram', 'vinay@gmal.com', '2019-01-03', 1000, 0, 0, 123);
+(13, 27, 'vinay', 'vinay@gmal.com', '2019-01-04', 1000, 0, 0, 123);
 
 --
 -- Indexes for dumped tables
@@ -244,13 +247,13 @@ ALTER TABLE `wallet`
 -- AUTO_INCREMENT for table `bookedproducts`
 --
 ALTER TABLE `bookedproducts`
-  MODIFY `idbookedproducts` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `idbookedproducts` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `cartdetails`
 --
 ALTER TABLE `cartdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -262,7 +265,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `uf`
 --
 ALTER TABLE `uf`
-  MODIFY `iduf` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `iduf` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `vendor`
@@ -274,7 +277,7 @@ ALTER TABLE `vendor`
 -- AUTO_INCREMENT for table `wallet`
 --
 ALTER TABLE `wallet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

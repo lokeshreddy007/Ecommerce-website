@@ -113,7 +113,7 @@ $idforsame = array();
                     <?php if($user->userid == $id ){?>
                       <?php foreach($userproduct as $product){ ?>
                     <?php if($product->userid == $id ){?>
-                    <?php if($product->productstratdate == $user->dateone && $product->productid == $user->productid && $product->productenddate == $user->datelast ){?>
+                    <?php if($product->productstratdate == $user->dateone && $product->cartid == $user->id && $product->productenddate == $user->datelast ){?>
                        
                            <?php array_push($idforsame, $user->id) ?>
                         
@@ -193,6 +193,7 @@ $len = count($all);
   $productlast = array();
   $productimg = array();
    $usercartid = array();
+   $cartid = array();
   ?>
     <?php $num = 1;?>
             <?php for($i=0;$i <= $len;$i++){?> 
@@ -213,6 +214,7 @@ $len = count($all);
                 <?php array_push($usercartid, $data->id);?>
               
                  <?php array_push($productimg, $data->productimg);?>
+               <?php array_push($cartid, $data->id);?>
               
                  <?php array_push($productstart, $data->productstratdate);?>
               
@@ -251,6 +253,8 @@ $daysall = join(',', $days);
 echo $daysall;
 $priceall = join(',', $price);
 echo $priceall;
+$cartidall = join(',', $cartid);
+echo $cartidall;
 
 ?>
 
@@ -323,14 +327,23 @@ echo $vendornameall;
                         <?php $userid =  $user->userid;?>
                         <?php $username =  $user->username;?>
                         <?php $usermail =  $user->usermail;?>
-                       
+                       <?php $phonenum =  $user->phonenum;?>
                         <?php $productprice =  $user->usermail;?>
                       
                         
                         
                         <?php } ?>
  <?php } ?>
-  
+  <?php
+date_default_timezone_set('Asia/Kolkata');
+$idval = date('dmYHis');
+$rest = substr("$phonenum",6);
+echo $rest;
+echo "<br/>";
+$idall = $rest.$idval;
+echo $idall;
+   
+?>
 
   <form class="form-horizontal" action="<?php echo base_url();?>Managementcontrol/Finalbooking" method="post">
   <input type="hidden" id =""  value="<?php echo $userid; ?>" name="userid"  />
@@ -343,13 +356,19 @@ echo $vendornameall;
 <input type="hidden" id =""   value="<?php echo $balval ?>" name="balval"  />
 <input type="hidden" id =""   value="<?php echo $productstartall ?>" name="$productstartall"  />
 <input type="hidden" id =""   value="<?php echo $productlastall ?>" name="$productlastall"  />
-<input type="hidden" id =""   value="<?php echo $productimgall ?>" name="$productimgall"  />
+<input type="hidden" id =""   value="<?php echo $productimgall ?>" name="productimgall"  />
+<input type="hidden" id =""   value="<?php echo $idall ?>" name="transidall"  />
+
 <!--need to change price and total price-->
 <input type="hidden" id =""   value="<?php echo $priceall ?>" name="priceall"  />
+<input type="hidden" id =""   value="<?php echo $cartidall ?>" name="$cartidall"  />
+
 <input type="hidden" id =""   value="<?php echo $daysall ?>" name="days"  />
 <input type="hidden" id =""   value="<?php echo $vendoridall ?>" name="vendoridall"  />
 <input type="hidden" id =""   value="<?php echo $vendornameall ?>" name="vendornameall"  />
 <input type="hidden" id =""   value="<?php echo $pincode ?>" name="pincode"  />
+<input type="hidden" id =""   value="<?php echo $phonenum ?>" name="phonenum"  />
+
 
 
 
@@ -383,7 +402,12 @@ $walletbal = $balval - $priceval;
 
 
 });
-
+/*sadfs
+1. make the technology used part font same in all palce
+2.number in certificate is worng
+3.in skills in spacing is more in php and mysql ,html&css
+python part
+f*/
   </script>                      
    
 </body>

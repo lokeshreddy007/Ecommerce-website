@@ -1590,7 +1590,7 @@ header #nav-icon {
     display: block;
     height: 0;
     opacity: 1;
-    padding-bottom: 133%
+    padding-bottom: 80%
 }
 .product-detail .left-col .big .img.animate {
     -moz-transition: all 0ms ease-out 0s;
@@ -3965,7 +3965,7 @@ $emailsess = $_SESSION['emailsess'];
                 
  <?php } ?>
  <?php } ?>
-
+        
                 <?php foreach($sliderlist as $projItem){ ?>
                     <?php if($projItem->productid == $id ){?>  
                 <?php echo $projItem->price; ?> 

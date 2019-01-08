@@ -135,13 +135,13 @@ if (/^\d{10}$/.test(val)) {
     ?>
     
     
-        <!-- <button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/getproducts'" style="text-align: center;" type="button">product</button>
+         <button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/getproducts'" style="text-align: center;" type="button">product</button>
          <button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/productupload'" style="text-align: center;" type="button">upload</button>
   
     
          <button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/sproduct'" style="text-align: center;" type="button">cart</button>
 
-   -->
+       
   
          <!-- <?php if (!$this->session->userdata('Manager')) {?> -->
         <!-- <button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/Saleshome'" style="text-align: center;" type="button" class="btn btn-success">HOME</button> -->
@@ -191,7 +191,7 @@ if (/^\d{10}$/.test(val)) {
         <label class="control-label col-sm-4" > Flat no:</label>
         <div class="col-sm-8">
             
-            <input type="text"   class="form-control" id="d"   oninput="phoneValidation()" onkeypress="if(this.value.length==10) return false" min="0" placeholder="Enter Address" name="d" required ">
+            <input type="text"   class="form-control" id="d"   oninput="phoneValidation()" onkeypress="if(this.value.length==10) return false" min="0" placeholder="Enter Address" name="d" required>
       </div>
     </div>
 
@@ -199,15 +199,14 @@ if (/^\d{10}$/.test(val)) {
         <label class="control-label col-sm-4" > Password:</label>
         <div class="col-sm-8">
             
-        <input name="password" id="e"  class="form-control" type="password" placeholder="Enter password" onkeyup='check();' />  
+        <input name="password"   class="form-control" name="pass" type="password" placeholder="Enter password"  />  
       </div>
     </div>
 
     <div class="form-group">
         <label class="control-label col-sm-4" > Confirm Password:</label>
         <div class="col-sm-8">
-        <input type="password" name="confirm_password" id="f" class="form-control" placeholder="Confirm password"  onkeyup='check();' /> 
-  <span id='message'></span>
+            <input type="password" name="confirm_password"  name="conpass" class="form-control" placeholder="Confirm password" /> 
       </div>
     </div>
 

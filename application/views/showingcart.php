@@ -94,12 +94,8 @@ html {
 <!-- <h1 style="float:right">Products</h1> -->
 
 
-                                    
-
-
 
 <?php $id = intval($_GET['id']);
-
 
 ?>
 
@@ -111,9 +107,11 @@ $idforsame = array();
                     <?php if($user->userid == $id ){?>
                       <?php foreach($userproductcheck as $product){ ?>
                     <?php if($product->userid == $id ){?>
-                    <?php if($product->productstratdate == $user->dateone && $product->productid == $user->productid && $product->productenddate == $user->datelast ){?>
+                    <?php if($product->productstratdate == $user->dateone && $product->cartid  == $user->id && $product->productenddate == $user->datelast ){?>
                        
                            <?php array_push($idforsame, $user->id) ?>
+                           <?php echo $user->id;?>
+                             <?php echo "<br/>"?>
                         
                     <?php } ?>
                     <?php } ?>
@@ -136,6 +134,7 @@ $allid = array();
                     <?php if($user->userid == $id ){?>
 
                      <?php array_push($allid, $user->id) ?>
+ <?php echo $user->id;?>
  <?php } ?>
                     <?php } ?>
 

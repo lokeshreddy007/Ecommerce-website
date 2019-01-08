@@ -23,17 +23,12 @@ class Welcome extends CI_Controller {
        $c= $this->input->post('c');    
       
        $d=$this->input->post('d');
-        $e=$this->input->post('e');        
-       $f=$this->input->post('f');
-        
-        $g=$this->input->post('g');
-
+        $e="now";       
+       $f="now"; 
+        $g=$this->input->post('num');
+//`e`, `f`, `g
         $h=$this->input->post('h');
-        
         $i=$this->input->post('i');
-
-        $p=$this->input->post('i');
-
         $pin=$this->input->post('pin');
 
        

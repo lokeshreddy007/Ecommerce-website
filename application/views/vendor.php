@@ -80,6 +80,17 @@ function AphoneValidation(){
     	document.getElementById("Aphone").innerHTML =  "<p style='color:red'><i>Please Enter Vaild Phone number</i></p>";
     }
 }
+function myconpass(){
+var pass = document.getElementById("pass").value;
+var conpass = document.getElementById("conpass").value; 
+if(pass == conpass){
+     document.getElementById("conpassdemo").innerHTML =  "<p style='color:green'></p>";    
+}else{
+     document.getElementById("conpassdemo").innerHTML =  "<p style='color:red'><i>Please Enter same password</i></p>";
+   
+}
+
+}
 </script>
 
   <style>
@@ -111,22 +122,9 @@ function AphoneValidation(){
 
 <body>
     
-<?php
-date_default_timezone_set('Asia/Kolkata');
-$idval = date('dmYHis');
-echo $idval;
-$num = 1234567890;
-echo "<br/>";
-//print_r(array_slice($num,6));
-// returns "ef"
-$rest = substr("$num",6);
-echo $rest;
-echo "<br/>";
-$idall = $rest.$idval;
-echo $idall;
-// returns "d"
-   
-?>
+
+
+  
   
     
     <div class="Back">
@@ -167,6 +165,20 @@ echo $idall;
                            <p id="demo"></p>
       </div>
     </div>
+        <div class="form-group">
+      <label class="control-label col-sm-4" for="pwd">Password*</label>
+      <div class="col-sm-8">          
+          <input type="password" class="form-control" id="pass"  placeholder="Enter Password" name="pass"  data-validate="required,email">  
+                           <p id="passdemo"></p>
+      </div>
+    </div>
+        <div class="form-group">
+      <label class="control-label col-sm-4" for="pwd">Conform Password*</label>
+      <div class="col-sm-8">          
+          <input type="password" class="form-control" id="conpass" oninput="myconpass()"  placeholder="Enter Password Again" name="conpass"  data-validate="required,email" style="background-color:#5bc0de">  
+                           <p id="conpassdemo"></p>
+      </div>
+    </div>
         
          <div class="form-group">
       <label class="control-label col-sm-4" for="pwd">Date</label>
@@ -180,12 +192,7 @@ echo $idall;
 
         
         
-        <div class="form-group">
-      <label class="control-label col-sm-4" for="pwd">Address*</label>
-      <div class="col-sm-8">          
-          <textarea class="form-control" id="pwd" placeholder="Enter comments" name="address" style="background-color:#5bc0de"></textarea>
-      </div>
-    </div>
+       
     
     </div>
       
@@ -226,7 +233,12 @@ echo $idall;
       </div>
     </div>
    
-      
+      <div class="form-group">
+      <label class="control-label col-sm-4" for="pwd">Address*</label>
+      <div class="col-sm-8">          
+          <textarea class="form-control" id="pwd" placeholder="Enter Address" name="address" ></textarea>
+      </div>
+    </div> 
 
     
         

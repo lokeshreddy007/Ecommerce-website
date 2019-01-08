@@ -63,7 +63,7 @@ body {
   border: none;
   outline: none;
   color: white;
-  padding: 14px 16px;
+  padding: 14px 50px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
@@ -113,7 +113,9 @@ body {
   <a class="active" href="<?php echo base_url();?>Managementcontrol/getproducts">Home</a>
    <a class="active" href="<?php echo base_url();?>Managementcontrol/vendorregister">Vendor Register</a>
    <a class="active" href="<?php echo base_url();?>Managementcontrol/vendorregister">Stock Up</a>
-  
+   <a class="active" href="<?php echo base_url();?>Managementcontrol/Vendorlogin">Vendor</a>
+     <a class="active" href="<?php echo base_url();?>Managementcontrol/userlogin">userlogin Up</a>
+
   <div class="topnav-right">
     <?php
    $name = $_SESSION['username'];
@@ -130,9 +132,9 @@ body {
     <div class="dropdown-content">
       <a href="#"><?php echo $name;?></a>
      
-      <a href="<?php echo base_url();?>Managementcontrol/Profile">Profile</a>
+      <a href="<?php echo base_url();?>Managementcontrol/Profile?id=<?php echo $userid; ?>">Profile</a>
       <a href="<?php echo base_url();?>Managementcontrol/showcart?id=<?php echo $userid; ?>">Cart</a>  
-      <a href="<?php echo base_url();?>Managementcontrol/userproduct?id=<?php echo $userid; ?>">Product</a>  
+      <a href="<?php echo base_url();?>Managementcontrol/userproduct?id=<?php echo $userid; ?>">Order History</a>  
 
       
       <a href="<?php echo base_url();?>Managementcontrol/userLogout">Logout</a>

@@ -2,15 +2,18 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="<?php echo base_url();?>https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="<?php echo base_url();?>https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/redmond/jquery-ui.css">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/redmond/jquery-ui.css">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="<?php echo base_url();?>https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="<?php echo base_url();?>https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- load jQuery and jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- load jQuery UI CSS theme -->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    
 <style>
 html {
   box-sizing: border-box;
@@ -68,17 +71,7 @@ html {
   background-color: #555;
 }
 
-/* #mydiv {
-    position:absolute;
-    top: 100%;
-    left: 50%;
-    width:30em;
-    height:7em;
-    margin-top: -9em; /*
-    margin-left: -15em; 
-    border: 1px solid #ccc;
-    background-color: #f3f3f3;
-} */
+
 
 #footer{
     background-color:#fff;
@@ -93,122 +86,150 @@ html {
 }
 
 
+.panel-order .row {
+	border-bottom: 1px solid #ccc;
+}
+.panel-order .row:last-child {
+	border: 0px;
+}
+.panel-order .row .col-md-1  {
+	text-align: center;
+	padding-top: 15px;
+}
+.panel-order .row .col-md-1 img {
+	width: 100px;
+	max-height: 80px;
+}
+.panel-order .row .row {
+	border-bottom: 0;
+}
+.panel-order .row .col-md-11 {
+	border-left: 1px solid #ccc;
+}
+.panel-order .row .row .col-md-12 {
+	padding-top: 7px;
+	padding-bottom: 7px; 
+}
+.panel-order .row .row .col-md-12:last-child {
+	font-size: 11px; 
+	color: #555;  
+	background: #efefef;
+}
+.panel-order .btn-group {
+	margin: 0px;
+	padding: 0px;
+}
+.panel-order .panel-body {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+.panel-order .panel-deading {
+	margin-bottom: 0;
+}                    
+
 
 
 </style>
 </head>
 <body>
-<center>  <h1>User Booking Products</h1> </center>
+<center>  <h1>Transaction Confirmation</h1> </center>
+
+<center>  <h3>Order History</h3> </center>
+
+
+<!-- <center style="color:green"><p>Your Transaction Sucessfully Placed</p></center> -->
 
 <!-- <h1 style="float:right">Products</h1> -->
 
 
-<?php 
- $url = $_SERVER["REQUEST_URI"];
-// print_r($url);
-$arr = explode("=",$url);
-// print_r($arr);
- $now = $arr;
- $len = count($now);
-// echo $len;
- $val = $len -1;
-$valfinal = $arr[$val];
-echo $valfinal;
-      ?>                                 
-
-<?php
-$totalsum= array();
-
-?>
 <?php $id = intval($_GET['id']);?>
-
-    <?php $bal = array();?>
-     <?php foreach($userwallet as $user){ ?>
-                    <?php if($user->userid == $id) {?>
-                        <?php array_push($bal,$user->amount);?>
-                        <?php } ?>
- <?php } ?>
+     
 
 
- <?php foreach($userdata as $user){ ?>
-                    <?php if($user->iduf == $id) {?> 
-                      <?php $name =  $user->iduf;?>
-                        <?php $userid =  $user->a;?>
-                        <?php $username =  $user->a;?>
-                        <?php $usermail =  $user->c;?>
-                    
-                     
-                        
-                        <?php } ?>
- <?php } ?>
-
- <?php $id = intval($_GET['id']);
- echo $id;
-
- ?>
 
 
- <table id="table" class="table" align="center" border="1px" style="width:100%; line-height: 30px;">    
-            
-            
-            <tr>
-                 <th>S.NO</th>
-                <th>productid</th>
-                 <th>produtname</th>
-                  <th>productstratdate</th>
-                   <th>productenddate</th>
-               
-                
-               
-                
-                 </tr>
-                  <tbody >							
-        
-        
-    <tr>
-    <?php $num = 1;?>
-            <?php foreach($usercart as $data){ ?>
-              <?php if($data->userid == $id ){?>
-            <td> <?php echo $num;?> </td>
-              <td><?php echo $data->productid; ?> </td>
-              <td><?php echo $data->productname; ?> </td>
-              <td><?php echo $data->dateone; ?> </td>
-             
-              <td><?php echo $data->datelast; ?> </td>
-              <?php $num = $num+1;?>
-                                            </tr>
-              <?php } ?>
-              <?php } ?>
-             
-    
-            
-    
-    
-            </tbody>  
-    </table>
+     <strong>Product Details</strong>     
+  <?php foreach($order as $user){ ?>
+<?php if($user->userid ==$id ){?>
+     
    
-
-  <!-- <form class="form-horizontal" action="<?php echo base_url();?>Managementcontrol/Finalbooking" method="post">
-  <input type="hidden" id =""  value="<?php echo $userid; ?>" name="userid"  />
-<input type="hidden" id =""   value="<?php echo $username ?>" name="username"  />
-<input type="hidden" id =""  value="<?php echo $usermail ?>" name="usermail"  />
-<input type="hidden" id =""  value="<?php echo $productid; ?>" name="productid"  />
-<input type="hidden" id =""   value="<?php echo $produtname ?>" name="produtname"  />
-<input type="hidden" id =""  value="<?php echo $priceval ?>" name="productprice"  />
-<input type="hidden" id =""   value="<?php echo $balval ?>" name="balval"  />
-<?php
-$walletbal = $balval - $priceval;
-?>
-<input type="hidden" id =""  value="<?php echo $walletbal ?>" name="finalbal"  />
-
-<button type="submit" id="payment" class="btn btn-primary">Final Booking</button>
-<button  id="addWallet" onclick="window.location.href='<?php echo base_url();?>Managementcontrol/payment?id=<?php echo $userid;?> '" style="text-align: center;" type="button" class="btn btn-primary">Wallet</button>
-
-<!-- <button type="submit" class="btn btn-primary">Wallet</button> -->
  
-  </form>     -->
+                 
+                      
+                   
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<div class="panel panel-default panel-order">
+  <div class="panel-heading">
+    
+      <div class="btn-group pull-right">
+          <div class="btn-group">
+			
+			<ul class="dropdown-menu dropdown-menu-right">
+			
+			</ul>
+		  </div>
+		</div>
+  </div>
+
+    
+
+    <div class="row">
+	  <div class="col-md-1"><img src="<?php echo base_url().$user->productimg; ?>" class="media-object img-thumbnail"></div>
+	  <div class="col-md-11">
+		<div class="row">
+		  <div class="col-md-12">
+			<div class="pull-right"><label class="label label-success">Approved</label> </div>
+      <!-- <div class="pull-right"><?php echo $user->productimg;?></div> -->
+      <span><strong>TransactionId: <a href="<?php echo base_url();?>Managementcontrol/productinfo?id=<?php echo $user->idbookedproducts;?>"><span>  <?php echo $user->Transactionid;?> </span></a>
+</strong></span> <br>
+<span><strong>OrderName:<?php echo $user->productname;?></strong></span> </br>
+<span class="label label-info"></span><br>
+  Vendor:<?php echo $user->vendorname;?> <br>
+			ProductPrice :$<?php echo $user->productprice;?> 
+			<?php echo $user->productstratdate;?> 
+			<?php echo $user->productenddate;?>
+                       <h3>Cancelled Dates</h3> 
+                            <?php foreach ($canpro as $value) { ?>
+     <?php if($value->bookedid == $user->idbookedproducts){?>
+      <?php echo $value->datelist;?>,
+ 
+ <?php }else{ ?>
+     <?php $cal = 0; ?>
+     <?php } ?>
+ <?php } ?>
+     </strong></span> 
+				
+		<a data-placement="top" class="btn btn-success btn-xs glyphicon glyphicon-ok" href="#" title="View"></a>
+			  </div>
+		  <div class="col-md-12">
+			order made on:<?php echo $user->dateone;?> To   <?php echo $user->datelast;?>
+                      
+
+                  </div>
+		</div>
+     
+               
+	  </div>
+	</div>
+     <?php } ?>
+     <?php } ?>
+    
+ 
+            
+              
+
+</div>
+</div>   
+              
+
+
+
+  </form>     
                   
-   
+ 
+ 
 </body>
 </html>
 

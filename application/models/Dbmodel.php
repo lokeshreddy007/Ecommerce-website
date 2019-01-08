@@ -34,7 +34,7 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
   
    
     }
-    public function getproducttouser($userid,$username,$usermail,$productid,$produtname,$productprice,$balval,$finalbal,$dateone,$datelast,$vendoridall,$vendornameall,$pincode,$priceall,$days)
+    public function getproducttouser($userid,$username,$usermail,$productid,$produtname,$productprice,$balval,$finalbal,$dateone,$datelast,$vendoridall,$vendornameall,$pincode,$priceall,$days,$cartid,$productimgall,$transidall,$phonenum)
      {
         
 //        print_r($productid);
@@ -47,7 +47,9 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
         $vendornameallex = explode(",",$vendornameall);
         $pincodeex = explode(",",$pincode);
         $priceallex = explode(",",$priceall);
-        $days = explode(",",$days);
+        $productimgallex = explode(",",$productimgall);
+         $daysex = explode(",",$days);
+        $cartidex = explode(",",$cartid);
          print_r($dateoneex);
            print_r($datelastex); 
            print_r($vendoridallex);
@@ -69,7 +71,10 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
          $vendornamealla = $vendornameallex[$i];
          $pincodea = $pincodeex[$i];
          $pricealla = $priceallex[$i];
-          $daysa = $days[$i];
+          $daysa = $daysex[$i];
+          $cartida = $cartidex[$i];
+           $productimgalla = $productimgallex[$i];
+          
         
             echo $productida;
           echo $produtnamea;
@@ -81,7 +86,7 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
           echo $pricealla;
           echo $daysa ;
 
-            $sql="INSERT INTO `bookedproducts`(`userid`, `username`, `usermail`, `productid`, `productname`, `productprice`, `balval`, `finalbal`, `dateone`, `datelast`, `vendorid`, `vendorname`, `pincode`, `faltnumber`, `Transactionid`,`date`, `price`) VALUES ('$userid','$username','$usermail','$productida','$produtnamea','$productprice','$balval','$finalbal','$dateonea','$datelasta','$vendoridalla','$vendornamealla','$pincode','0','0','$daysa','$pricealla')";
+            $sql="INSERT INTO `bookedproducts`(`userid`, `username`, `usermail`, `productid`, `productname`, `productprice`, `balval`, `finalbal`, `dateone`, `datelast`, `vendorid`, `vendorname`, `pincode`, `faltnumber`, `Transactionid`,`date`, `price`,`cartid`,`productimg`, `phonenum`) VALUES ('$userid','$username','$usermail','$productida','$produtnamea','$productprice','$balval','$finalbal','$dateonea','$datelasta','$vendoridalla','$vendornamealla','$pincodea','0','$transidall','$daysa','$pricealla','$cartida','$productimgalla','$phonenum')";
            $this->db->query($sql);
     }
      }
@@ -104,14 +109,30 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
 //          $this->db->query($sql);
 //        }
 //}
-   public function  vregister($name,$mail,$dat,$address,$num,$aphone,$pincode,$product)
+   public function  vregister($name,$mail,$dat,$address,$num,$aphone,$pincode,$product,$pass,$conpass)
     {
-            $sql="insert into vendor(`vendorname`,`vendormail`,`data`,`address`,`pnum`,`pnum2`,`pincode`,`product`)VALUES ('$name','$mail','$dat','$address','$num','$aphone','$pincode','$product')";
+            $sql="insert into vendor(`vendorname`,`vendormail`,`data`,`address`,`pnum`,`pnum2`,`pincode`,`product`, `pass`, `conpass`)VALUES ('$name','$mail','$dat','$address','$num','$aphone','$pincode','$product','$pass','$conpass')";
                $this->db->query($sql);
     }
+//    
+//    $query=$this->db->get('product');
+//            return $query->result();
+    public function canManagerLogin($mail,$pass){
+        $this->db->where('vendormail',$mail);
+        $this->db->where('pass',$pass);
+        $query= $this->db->get('vendor');
+        return $query->result();
+        
+    }
+    public function CanUserLogin($mail,$pass){
+        $this->db->where('c',$mail);
+        $this->db->where('e',$pass);
+        $query=$this->db->get('uf');
+        return $query->result();
+    }
    
-
-        public function getproducts()
+    
+    public function getproducts()
             
     {
          $query=$this->db->get('product');
@@ -186,6 +207,28 @@ public function DailyProducts()
             return $query->result();
             
 }
+
+public function prof()
+            
+{
+               
+            $query=$this->db->get('cartdetails');
+            return $query->result();
+            
+}
+
+
+public function calcelledproduct($bookedid,$userid,$dateone,$datelast,$Transactionid,$date,$vendorid){
+     $sql="INSERT INTO `cancellproduct`(`bookedid`, `userid`, `dateone`, `datelast`, `Transactionid`, `vendorid`, `datelist`) VALUES ('$bookedid','$userid','$dateone','$datelast','$Transactionid','$vendorid','$date')";
+      $this->db->query($sql);   
+     
+}
+public function getcalcelledproduct(){
+    $query = $this->db->get('cancellproduct');
+    return $query->result();
+}
+
+
 }
      
 //SELECT SUM(amount) FROM `wallet` WHERE userid = 12 

@@ -62,8 +62,11 @@ class Managementcontrol  extends CI_Controller {
   public function Finalbooking()
         {
           $userid=$this->input->post('userid'); 
+           $transidall=$this->input->post('transidall'); 
+          
           $username= $this->input->post('username');
-          $usermail= $this->input->post('usermail');               
+          $usermail= $this->input->post('usermail');  
+           $phonenum= $this->input->post('phonenum');  
           $productid= $this->input->post('$productidall');
            $produtname=$this->input->post('$productnameall');  
           $productprice= $this->input->post('productprice');
@@ -76,13 +79,14 @@ class Managementcontrol  extends CI_Controller {
             $vendornameall=$this->input->post('vendornameall');
             $pincode = $this->input->post('pincode');
              $priceall = $this->input->post('priceall');
-             $days = $this->input->post('days');
-
+              $cartid = $this->input->post('$cartidall');
+             $days = $this->input->post('days');  
+             $productimgall = $this->input->post('productimgall');
             $this->load->model('Dbmodel');
-          $this->Dbmodel->getproducttouser($userid,$username,$usermail,$productid,$produtname,$productprice,$balval,$finalbal,$dateone,$datelast,$vendoridall,$vendornameall,$pincode,$priceall,$days);
+          $this->Dbmodel->getproducttouser($userid,$username,$usermail,$productid,$produtname,$productprice,$balval,$finalbal,$dateone,$datelast,$vendoridall,$vendornameall,$pincode,$priceall,$days,$cartid,$productimgall,$transidall,$phonenum);
 
-//            redirect(base_url() . 'Managementcontrol/userproduct?id='.$userid);
-            $this->load->view(base_url() . 'Managementcontrol/userproduct?id='.$userid);
+            redirect(base_url() . 'Managementcontrol/userproduct?id='.$userid);
+//            $this->load->view(base_url() . 'Managementcontrol/userproduct?id='.$userid);
         
        }
         
@@ -145,21 +149,21 @@ class Managementcontrol  extends CI_Controller {
         redirect(base_url() . 'Managementcontrol/ui1');
 
         }
-        public function userproduct(){
-             $this->load->view('header');
+      public function userproduct()
+              {
+          $this->load->view('header');
           $this->load->model('Dbmodel');
           $usercart=  $this->Dbmodel->getuserproducts();
-          $data['usercart']=$usercart;
-          $this->load->view('userproducts',$data);
+           $calpro = $this->Dbmodel->getcalcelledproduct();
+         $data['canpro'] =$calpro; 
+          $data['order']=$usercart;
+         
 
+          $this->load->view('userproducts',$data);
         }
 
         
-        public function Profile()
-        {
-             $this->load->view('profile');
-       }
-        
+      
 
 
         public function productupload()
@@ -324,7 +328,9 @@ public function getvegtables()
       public function vregister()
           {
       $name=$this->input->post('name');   
-         $mail= $this->input->post('mail');            
+         $mail= $this->input->post('mail');     
+          $pass= $this->input->post('pass');     
+           $conpass= $this->input->post('conpass');     
          $dat=$this->input->post('dat');
          $time = strtotime($dat);
           $dat = date('Y-m-d',$time);  
@@ -339,10 +345,150 @@ public function getvegtables()
           
           
           $this->load->model('Dbmodel');
-           $this->Dbmodel->vregister($name,$mail,$dat,$address,$num,$aphone,$pincode,$product);
+           $this->Dbmodel->vregister($name,$mail,$dat,$address,$num,$aphone,$pincode,$product,$pass,$conpass);
           redirect(base_url());
     
  
 }
 
+public function Profile()
+{
+  $this->load->view('header');
+  $this->load->model('Dbmodel');
+  $usercart=  $this->Dbmodel->prof();
+  $data['usercart']=$usercart;
+     $this->load->view('profile',$data);
 }
+public function productinfo(){
+    $this->load->view('header');
+       $this->load->model('Dbmodel');
+        $usercart=  $this->Dbmodel->getuserproducts();
+        $calpro = $this->Dbmodel->getcalcelledproduct();
+         $data['canpro'] =$calpro; 
+       
+          $data['order']=$usercart;
+         
+    $this->load->view('productinfo',$data);
+}
+public function delproduct(){
+     $bookedid=$this->input->post('bookedid');   
+       $userid= $this->input->post('userid');            
+         $dateone=$this->input->post('dateone'); 
+         $vendorid=$this->input->post('vendorid'); 
+         $datelast=$this->input->post('datelast');
+          $Transactionid=$this->input->post('Transactionid');        
+         $date=$this->input->post('alldate');
+        
+//          $pincode=$this->input->post('mat');
+//          $product=$this->input->post('product');
+            $this->load->model('Dbmodel');
+           $this->Dbmodel->calcelledproduct($bookedid,$userid,$dateone,$datelast,$Transactionid,$date,$vendorid);
+        
+//           $this->load->view('productinfo',$data);
+           http://localhost/code/Managementcontrol/userproduct?id=35
+          redirect(base_url() . 'Managementcontrol/userproduct?id='.$userid);
+    
+}
+public function getjson(){
+    $this->load->view('header');
+    $this->load->view('getjson');
+    
+}
+public function Vendorlogin(){
+    $this->load->view('header');
+    $this->load->view('Vendorlogin');
+    
+}
+public function Vendorhome(){
+    $this->load->view('vendoeheader');
+     $this->load->model('Dbmodel');
+        $usercart=  $this->Dbmodel->getuserproducts();
+        $calpro = $this->Dbmodel->getcalcelledproduct();
+         $data['canpro'] =$calpro; 
+       
+          $data['order']=$usercart;
+    
+    $this->load->view('Vendorhome',$data);
+    
+}
+public function loginCheckManager()
+    {
+     
+        $mail= $this->input->post('mail');
+        $pass=$this->input->post('pass'); 
+//        echo $mail;
+//        echo $pass;
+          $this->load->model('Dbmodel');
+          $managerData=$this->Dbmodel->canManagerLogin($mail,$pass);
+          if(empty($managerData))
+          {
+            echo "inside not value";
+             $this->session->set_flashdata('managerlogin','Please Login with Valid username and password ');
+             redirect(base_url() . 'Managementcontrol/Vendorlogin'); 
+//              $this->load->view('Vendorhome');
+          }
+          else{
+            $output =  $this->Dbmodel->getvendordetails();
+            $data['viewdata']=$output; 
+            foreach($data['viewdata'] as $item){
+                 echo "login success";                  
+              if( $item->vendormail ==$mail && $item->pass ==$pass){
+                
+                $this->session->set_userdata('vendorid',$item->vendorid);
+                $this->session->set_userdata('vendorname',$item->vendorname);
+                       redirect(base_url() . 'Managementcontrol/Vendorhome?id='.$item->vendorid);
+
+//                 $this->load->view('Vendorhome');
+                
+                    
+         
+          }
+      
+     
+    }
+  }
+
+}
+public function userlogin(){
+    $this->load->view('header');
+    $this->load->view('loginpageuser');
+}
+public function userlogincheck(){
+    $mail = $this->input->post('mail');
+    $pass = $this->input->post('pass');
+//    echo $mail;
+//    echo $pass;
+    $this->load->model('Dbmodel');
+          $managerData=$this->Dbmodel->CanUserLogin($mail,$pass);
+          if(empty($managerData))
+          {
+//            echo "inside not value";
+             $this->session->set_flashdata('managerlogin','Please Login with Valid username and password ');
+//             redirect(base_url() . 'Managementcontrol/userlogin'); 
+              $this->load->view('userlogin');
+          }
+          else{
+            $output =  $this->Dbmodel->getuserdetails();
+            $data['viewdata']=$output; 
+            foreach($data['viewdata'] as $item){
+//                 echo "login success";                  
+              if( $item->c ==$mail && $item->e ==$pass){
+                
+                $this->session->set_userdata('username',$item->a );
+		$this->session->set_userdata('usersurname',$item->b );
+                $this->session->set_userdata('emailsess',$item->c );
+                $this->session->set_userdata('userid',$item->id );
+                 redirect(base_url() . 'Managementcontrol/getproducts');
+
+//                 $this->load->view('Vendorhome');
+                
+                    
+         
+          }
+      
+     
+    }
+  }
+}
+}
+
