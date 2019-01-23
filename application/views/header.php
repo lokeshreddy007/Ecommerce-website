@@ -108,22 +108,24 @@ body {
 </style>
 </head>
 <body>
-
+    <?php
+   $name = $_SESSION['username'];
+   $usersurname = $_SESSION['usersurname'];
+   $emailsess = $_SESSION['emailsess'];
+   $userid = $_SESSION['userid'];  
+   $vendoridnow = $_SESSION['vendorid'];  
+?>
 <div class="topnav"> 
   <a class="active" href="<?php echo base_url();?>Managementcontrol/getproducts">Home</a>
    <a class="active" href="<?php echo base_url();?>Managementcontrol/vendorregister">Vendor Register</a>
    <a class="active" href="<?php echo base_url();?>Managementcontrol/vendorregister">Stock Up</a>
    <a class="active" href="<?php echo base_url();?>Managementcontrol/Vendorlogin">Vendor</a>
      <a class="active" href="<?php echo base_url();?>Managementcontrol/userlogin">userlogin Up</a>
+     <a class="active" href="<?php echo base_url();?>Managementcontrol/admin">admin</a>
+     <a class="active" href="<?php echo base_url();?>Managementcontrol/report?id=<?php echo $vendoridnow;?>">Report</a>
 
   <div class="topnav-right">
-    <?php
-   $name = $_SESSION['username'];
-   $usersurname = $_SESSION['usersurname'];
-   $emailsess = $_SESSION['emailsess'];
-   $userid = $_SESSION['userid'];  
 
-?>
 
      <div class="dropdown">
     <button class="dropbtn">Profile 

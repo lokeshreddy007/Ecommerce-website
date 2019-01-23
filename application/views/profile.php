@@ -30,6 +30,21 @@
 <body>
     
  <?php $id = intval($_GET['id']);?>
+
+
+<?php foreach($cal as $user){ ?>
+ <?php if($user->userid == $id) {?> 
+    
+ <?php array_push($array, $id)  ;?> 
+                            
+ <?php } ?>
+ <?php } ?>
+    
+    <?php foreach($booked as $user){ ?>
+ <?php if($user->iduf == $id) {?> 
+    
+ <?php } ?>
+ <?php } ?>
 <?php foreach($usercart as $user){ ?>
                     <?php if($user->iduf == $id) {?> 
                       <?php $userid =  $user->iduf;?>

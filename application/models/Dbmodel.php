@@ -114,6 +114,11 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
             $sql="insert into vendor(`vendorname`,`vendormail`,`data`,`address`,`pnum`,`pnum2`,`pincode`,`product`, `pass`, `conpass`)VALUES ('$name','$mail','$dat','$address','$num','$aphone','$pincode','$product','$pass','$conpass')";
                $this->db->query($sql);
     }
+    public function submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode,$idbookedproducts,$check,$dat){                                                       
+            $sql="INSERT INTO `sumbitproduct`(`userid`, `username`, `usermail`, `productname`, `productprice`, `pincode`, `date`, `phonenum`, `idbookedproduct`, `productval`) VALUES ('$userid','$username','$usermail','$productname','$productprice','$pincode','$dat','$phonenum','$idbookedproducts','$check')";
+             $this->db->query($sql);
+            
+    }
 //    
 //    $query=$this->db->get('product');
 //            return $query->result();
@@ -124,7 +129,13 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
         return $query->result();
         
     }
-    public function CanUserLogin($mail,$pass){
+    public function managercode($mail,$pass){
+        $this->db->where('name',$mail);
+        $this->db->where('code',$pass);
+        $query=$this->db->get('admin');
+        return $query->result();
+    }
+       public function CanUserLogin($mail,$pass){
         $this->db->where('c',$mail);
         $this->db->where('e',$pass);
         $query=$this->db->get('uf');
@@ -132,6 +143,13 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
     }
    
     
+    public function managercodelogin()
+            
+    {
+         $query=$this->db->get('admin');
+		return $query->result();
+                
+    }
     public function getproducts()
             
     {
@@ -141,6 +159,10 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
     }
     public function getvendordetails(){
         $query = $this->db->get('vendor');
+        return $query->result();
+    }
+ public function getsubmitproject(){
+        $query = $this->db->get('sumbitproduct');
         return $query->result();
     }
 
@@ -219,10 +241,18 @@ public function prof()
 
 
 public function calcelledproduct($bookedid,$userid,$dateone,$datelast,$Transactionid,$date,$vendorid){
-     $sql="INSERT INTO `cancellproduct`(`bookedid`, `userid`, `dateone`, `datelast`, `Transactionid`, `vendorid`, `datelist`) VALUES ('$bookedid','$userid','$dateone','$datelast','$Transactionid','$vendorid','$date')";
+      $productdate = explode(",",$date);
+       $num =  count($productdate);
+       for($i=0;$i<$num;$i++){  
+        $datepro = $productdate[$i];
+        $time = strtotime($datepro);
+        $datepro = date('Y-m-d',$time);
+    $sql="INSERT INTO `cancellproduct`(`bookedid`, `userid`, `dateone`, `datelast`, `Transactionid`, `vendorid`, `datelist`) VALUES ('$bookedid','$userid','$dateone','$datelast','$Transactionid','$vendorid','$datepro')";
       $this->db->query($sql);   
+       }
      
 }
+
 public function getcalcelledproduct(){
     $query = $this->db->get('cancellproduct');
     return $query->result();
