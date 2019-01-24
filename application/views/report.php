@@ -64,7 +64,8 @@
 	</style>
 	</head>
 	<body>
-          
+                  <?php $id = intval($_GET['id']); ?>
+
 	<div class="container">
 			<div class="Back">
 <INPUT TYPE="button" style="text-align: center" type="button" class="btn btn-success" VALUE="Back" onClick="history.go(-1);">
@@ -86,7 +87,7 @@
 				</div> -->
 			</div>
 			<br />
-	 <form class="form-inline" action="<?php echo base_url();?>Welcome/getreportbydates" method="post">
+	 <form class="form-inline" action="<?php echo base_url();?>Managementcontrol/getreportbydates" method="post">
   <div class="form-group">
       <p>From Date: <input type = "text" name="fromdate" id = "datepicker-13"></p>
       <input type="hidden" name="id" value="<?php echo $id;?> " />
@@ -119,20 +120,30 @@
                 
 <tr>
 <?php $num = 1;?>
+    <?php   $val = date("Y-m-d"); ?>
+    
 				<?php foreach($viewdata as $data){ ?>
+                        <?php if ($data->vendorid == $id) { ?>
+                      
+      <?php if ($data->date == $val) { ?>
+    
+  
     
 	<td> <?php echo $num;?> </td>
-	<td><?php  ?> </td>
+	<td><?php echo $data->userid; ?> </td>
          <td><?php echo $data->username; ?> </td>
          <td> <?php echo $data->usermail;?> </td>
-	<td><?php   ?> </td>
-	<td><?php   ?> </td>
+          
+	<td><?php echo $data->phonenum;  ?> </td>
+	<td><?php echo $data->productname;  ?> </td>
+        <td><?php echo $data->date;  ?> </td>
  
                                         
                                        
                                         <tr/>
-					
+					  <?php } ?>
                                         <?php } ?>
+                                          <?php } ?>
 					<tr>
 
 				

@@ -114,8 +114,8 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
             $sql="insert into vendor(`vendorname`,`vendormail`,`data`,`address`,`pnum`,`pnum2`,`pincode`,`product`, `pass`, `conpass`)VALUES ('$name','$mail','$dat','$address','$num','$aphone','$pincode','$product','$pass','$conpass')";
                $this->db->query($sql);
     }
-    public function submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode,$idbookedproducts,$check,$dat){                                                       
-            $sql="INSERT INTO `sumbitproduct`(`userid`, `username`, `usermail`, `productname`, `productprice`, `pincode`, `date`, `phonenum`, `idbookedproduct`, `productval`) VALUES ('$userid','$username','$usermail','$productname','$productprice','$pincode','$dat','$phonenum','$idbookedproducts','$check')";
+    public function submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode,$idbookedproducts,$check,$dat,$vendorid){                                                       
+            $sql="INSERT INTO `sumbitproduct`(`userid`, `username`, `usermail`, `productname`, `productprice`, `pincode`, `date`, `phonenum`, `idbookedproduct`, `productval`,`vendorid`) VALUES ('$userid','$username','$usermail','$productname','$productprice','$pincode','$dat','$phonenum','$idbookedproducts','$check','$vendorid')";
              $this->db->query($sql);
             
     }
@@ -229,6 +229,12 @@ public function DailyProducts()
             return $query->result();
             
 }
+public function submitproductbyid($id) {
+            $this->db->where('idbookedproducts',$id);
+            $query=$this->db->get('bookedproducts');
+            return $query->result();
+            
+}
 
 public function prof()
             
@@ -257,7 +263,11 @@ public function getcalcelledproduct(){
     $query = $this->db->get('cancellproduct');
     return $query->result();
 }
-
+    public function getsubmitprojectfromdate($empid,$fromdate,$enddate){
+        $sql = "SELECT * FROM sumbitproduct WHERE date >= '$fromdate'  AND date <= '$enddate' AND vendorid = '$empid'";
+//        SELECT * FROM sumbitproduct WHERE date >= '2019-01-22' AND date <= '2019-01-26' AND userid = 14 
+        return $this->db->query($sql)->result();
+    }
 
 }
      

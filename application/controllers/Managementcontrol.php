@@ -303,12 +303,12 @@ class Managementcontrol extends CI_Controller {
         $this->load->model('Dbmodel');
         $this->Dbmodel->vregister($name, $mail, $dat, $address, $num, $aphone, $pincode, $product, $pass, $conpass);
         $this->session->set_userdata('vendorname', $name);
-        $userdata=  $this->Dbmodel->getvendordetails();
-        $data['userdata']=$userdata;
-         foreach($userdata as $user){ 
-            if($user->vendorname == $name && $user->vendormail == $mail ){
+        $userdata = $this->Dbmodel->getvendordetails();
+        $data['userdata'] = $userdata;
+        foreach ($userdata as $user) {
+            if ($user->vendorname == $name && $user->vendormail == $mail) {
                 $id = $user->vendorid;
-                $this->session->set_userdata('vendorid',$id );    
+                $this->session->set_userdata('vendorid', $id);
             }
         }
         redirect(base_url());
@@ -367,12 +367,13 @@ class Managementcontrol extends CI_Controller {
         $this->load->view('header');
         $this->load->view('Vendorlogin');
     }
+
     public function completedproduct() {
         $this->load->view('header');
-         $this->load->model('Dbmodel');
+        $this->load->model('Dbmodel');
         $usercart = $this->Dbmodel->getuserproducts();
         $data['order'] = $usercart;
-        $this->load->view('completedproduct',$data);
+        $this->load->view('completedproduct', $data);
     }
 
     public function Vendorhome() {
@@ -380,8 +381,8 @@ class Managementcontrol extends CI_Controller {
         $this->load->model('Dbmodel');
         $usercart = $this->Dbmodel->getuserproducts();
         $calpro = $this->Dbmodel->getcalcelledproduct();
-         $pro = $this->Dbmodel->getsubmitproject();
-        
+        $pro = $this->Dbmodel->getsubmitproject();
+
         $data['canpro'] = $calpro;
         $data['pro'] = $pro;
         $data['order'] = $usercart;
@@ -400,14 +401,43 @@ class Managementcontrol extends CI_Controller {
         $idbookedproducts = $this->input->post('idbookedproducts');
         $check = $this->input->post('check');
         $vendorid = $this->input->post('vendorid');
-        
+
         $this->load->model('Dbmodel');
         $dat = date("Y-m-d");
-        $this->Dbmodel->submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode,$idbookedproducts,$check,$dat);
+        $this->Dbmodel->submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode, $idbookedproducts, $check, $dat);
 
 //           $this->load->view('productinfo',$data);
         http://localhost/code/Managementcontrol/userproduct?id=35
         redirect(base_url() . 'Managementcontrol/Vendorhome?id=' . $vendorid);
+    }
+
+    public function inserincontrolller() {
+        $id = intval($_GET['id']);
+        $vendoridnow = $_SESSION['vendorid'];
+        $this->load->model('Dbmodel');
+        $managerData = $this->Dbmodel->submitproductbyid($id);
+        foreach ($managerData as $user) {
+            $userid = $user->userid;
+            $username = $user->username;
+            $usermail = $user->usermail;
+            $phonenum = $user->phonenum;
+            $productprice = $user->price;
+            $productname = $user->productname;
+            $pincode = $user->pincode;
+            $idbookedproducts = $user->idbookedproducts;
+            $vendorid = $user->vendorid;
+            $check = "yes";
+            $vendorid = $user->vendorid;
+        }
+
+      
+         $dat = date("Y-m-d");
+      
+         $this->load->model('Dbmodel');
+       
+        $this->Dbmodel->submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode, $idbookedproducts, $check, $dat,$vendorid);
+        redirect(base_url() . 'Managementcontrol/Vendorhome?id=' . $vendoridnow);
+//        $this->load->view('Vendorhome');
     }
 
     public function loginCheckManager() {
@@ -469,10 +499,10 @@ class Managementcontrol extends CI_Controller {
 //                 echo "login success";                  
                 if ($item->c == $mail && $item->e == $pass) {
 
-                    $this->session->set_userdata('username',$item->a );
-		$this->session->set_userdata('usersurname',$item->b );
-                 $this->session->set_userdata('emailsess',$item->c );
-                 $this->session->set_userdata('userid',$item->iduf );
+                    $this->session->set_userdata('username', $item->a);
+                    $this->session->set_userdata('usersurname', $item->b);
+                    $this->session->set_userdata('emailsess', $item->c);
+                    $this->session->set_userdata('userid', $item->iduf);
                     redirect(base_url() . 'Managementcontrol/getproducts');
 
 //                 $this->load->view('Vendorhome');
@@ -481,13 +511,7 @@ class Managementcontrol extends CI_Controller {
         }
     }
 
-    public function report() {
-        $this->load->view('header');
-         $this->load->model('Dbmodel');
-        $getsubmitproject = $this->Dbmodel->getsubmitproject();
-        $data['viewdata'] = $getsubmitproject;
-        $this->load->view('report',$data);
-    }
+   
 
     public function adminhome() {
         $this->load->view('header');
@@ -517,10 +541,36 @@ class Managementcontrol extends CI_Controller {
         }
     }
 
-    public function sumbitproduct() {
+    public function getreportbydate() {
         $this->load->view('header');
 
-        $this->load->view('sumbitproduct');
+        $this->load->view('getreportbydate');
     }
+     public function report() {
+        $this->load->view('header');
+        $this->load->model('Dbmodel');
+        $getsubmitproject = $this->Dbmodel->getsubmitproject();
+        $data['viewdata'] = $getsubmitproject;
+        $this->load->view('report', $data);
+    }
+    public function getreportbydates()
+	{
+		$this->load->view('header');
+		$empid= $this->input->post('id');
+		$fromdate=$this->input->post('fromdate');
+		$time = strtotime($fromdate);
+		$fromdate = date('Y-m-d',$time);
+		$enddate=$this->input->post('enddate');
+		$time = strtotime($enddate);
+		$enddate = date('Y-m-d',$time);
+//                echo $empid;
+//                echo $fromdate;
+//                echo $enddate;
+		$this->load->model('Dbmodel');
+		$rangereport =  $this->Dbmodel->getsubmitprojectfromdate($empid,$fromdate,$enddate);
+               
+		$data['output'] = $rangereport;
+		$this->load->view('rangeouput',$data);
+	}
 
 }

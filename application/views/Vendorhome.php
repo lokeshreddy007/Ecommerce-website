@@ -71,6 +71,7 @@
                     <?php
                             if (in_array($idnow, $idproduct)) {
                                 $now = 1;
+                                continue;
                             } else {
                                 $now = 0;
                             }
@@ -128,7 +129,7 @@
 
                             <?php if ($give == 1) { ?>
                             <td> <?php echo $num; ?> </td>
-                            <td><a href="<?php echo base_url(); ?>Managementcontrol/followup?id=<?php echo $data->Transactionid; ?>" /> <?php echo $data->Transactionid; ?></td>   
+                            <td><?php echo $data->Transactionid; ?></td>   
                             <td><?php echo $data->username; ?> </td>
                             <td><?php echo $data->usermail; ?> </td>
                             <td><?php echo $data->phonenum; ?> </td>
@@ -138,7 +139,7 @@
                             <td> </td>
                             <td><?php echo "delivered";?> </td>
                            <?php  }else{ ?>
-                                         <td><a href="<?php echo base_url(); ?>Managementcontrol/completedproduct?id=<?php echo $data->idbookedproducts;?>"><i class="material-icons" style="font-size:20px">arrow_forward</i>
+                                         <td><a href="<?php echo base_url(); ?>Managementcontrol/inserincontrolller?id=<?php echo $data->idbookedproducts;?>"><i class="material-icons" style="font-size:20px">arrow_forward</i>
                                                   <td><?php echo "not yet delivered";?> </td>
                             <?php } ?>
                             
