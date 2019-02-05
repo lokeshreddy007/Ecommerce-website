@@ -105,7 +105,9 @@ border: 1px solid #fff;
       <div class="container">
       <p>Product Name: <span class="project-name"><?php echo $projItem->productname;?></span></p>
       <p>Product Price: <span class="project-price"><?php echo $projItem->price;?></span></p>
-      <p>Product OfferPrice: <span class="project-offer"><?php echo $projItem->offerprice;?></span></p>
+      <p>Product OfferPrice: <span class="project-offer"><?php echo $projItem->offerprice;?></span>
+            <button  onclick="location.href='<?php echo base_url();?>Managementcontrol/bookproductone?id=<?php echo $projItem->productid; ?>'" type="button">Booking</button> </p>
+
 
       <button class="button" onclick="location.href='<?php echo base_url();?>Managementcontrol/getthisproducts?id=<?php echo $projItem->productid; ?>'" type="button">Subscribe</button> 
        

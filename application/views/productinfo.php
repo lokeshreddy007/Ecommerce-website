@@ -145,6 +145,8 @@
             <?php $dateone = $user->dateone; ?>
             <?php $datelast = $user->datelast; ?>
             <?php $Transactionid = $user->Transactionid; ?>
+    <?php $productname = $user->productname; ?>
+    <?php $qua = $user->quantity; ?>
 
 
         <?php } ?>
@@ -197,6 +199,8 @@
                                     <input type="hidden" id =""   value="<?php echo $Transactionid ?>" name="Transactionid"  />
                                     <!--<input type="hidden" id =""   value="<?php echo $user->idbookedproducts ?>" name="bookedid"  />-->
                                     <input type="hidden" id =""   value="<?php echo $vendorid ?>" name="vendorid"  />
+                                    <input type="hidden" id =""   value="<?php echo $productname ?>" name="productname"  />
+                                    <input type="hidden" id =""   value="<?php echo $qua ?>" name="qua"  />
 
                                     <span><strong>OrderName:<?php echo $user->productname; ?></strong></span> 
                                     <span class="label label-info"></span><br>

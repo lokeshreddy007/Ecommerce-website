@@ -32,14 +32,91 @@ class Managementcontrol extends CI_Controller {
         $days = $diff->format("%R%a days") + 1;
         $totalprice = $price * $days;
         $this->load->model('Dbmodel');
-//                SELECT `id`, `userid`, `username`, `usermail`, `productid`, `produtname`, `productimg`, `productprice`, `productstratdate`, `productenddate`, `description`, `days`, `pincode`, `totalprice`, `phonenum` FROM `cartdetails` WHERE 1
+//         SELECT `id`, `userid`, `username`, `usermail`, `productid`, `produtname`, `productimg`, `productprice`, `productstratdate`, `productenddate`, `description`, `days`, `pincode`, `totalprice`, `phonenum` FROM `cartdetails` WHERE 1
         $this->Dbmodel->insertdatatocart($userid, $username, $usermail, $productid, $productname, $price, $productimg, $description, $fromdata, $todata, $days, $pincode, $totalprice, $phonenum);
 //                $this->session->set_flashdata('status','Data Uploaded Successfull ');
         // redirect(base_url('Managementcontrol/getthisproducts?id=<?php echo $projItem->productid; 
         $this->load->view('product', $data);
         redirect(base_url() . 'Managementcontrol/showcart?id=' . $userid);
     }
-
+    public function getthisproducts() {
+//        $emploeeuserid = $_SESSION['emploeeuserid']; 
+        $userid = $_SESSION['userid'];
+        if(empty($userid)){
+            echo "empty";
+            redirect(base_url() );
+//            $this->load->view('product', $data);
+           
+        } else {
+        $this->load->view('header');
+        $this->load->model('Dbmodel');
+        $sliderdata = $this->Dbmodel->getproducts();
+        $userdata = $this->Dbmodel->getuserdetails();
+        $data['userdata'] = $userdata;
+        $data['sliderlist'] = $sliderdata;
+        $this->load->view('product', $data);
+        $this->load->view('footer');
+        }
+        
+    }
+    
+    public function bookproductone() {
+//        $emploeeuserid = $_SESSION['emploeeuserid']; 
+        $userid = $_SESSION['userid'];
+        if(empty($userid)){
+            echo "empty";
+            redirect(base_url() );
+//            $this->load->view('product');
+            
+        } else {
+        $userid = $_SESSION['userid'];
+        $id = intval($_GET['id']);
+        $username = $_SESSION['username'];
+        $usersurname = $_SESSION['usersurname'];
+        $usermail = $_SESSION['emailsess'];
+        $this->load->model('Dbmodel');
+        $sliderdata = $this->Dbmodel->getproductsbyid($id);
+        $userdata = $this->Dbmodel->getuserdetails($userid);
+        $data['userdata'] = $userdata;
+        $data['sliderlist'] = $sliderdata;
+        foreach($userdata as $user){
+            if($user->a == $username && $user->b == $usersurname && $user->c == $usermail  ){
+                $phonenum = $user->g;
+                $pincode = $user->i;
+            }
+        }
+        foreach($sliderdata as $projItem){
+            if($projItem->productid == $id ){
+                $productid = $projItem->productid;
+                $productname = $projItem->productname;
+                $price = $projItem->price;
+                $productimg = $projItem->productimg;
+                $description = $projItem->description; 
+            }
+        }
+       
+        $fromdata = date("Y-m-d");
+//        $todata =  date('Y-m-d', strtotime(' +1 day'));
+        $todata =  date("Y-m-d");
+//        $date1 = date_create($fromdata);
+//        $date2 = date_create($todata);
+//        $diff = date_diff($date1, $date2);
+        $days = 1 ;
+        $totalprice = $price * $days;
+        echo $phonenum;
+         echo $description;
+        echo $fromdata;
+        echo $todata;
+        echo $days;
+        echo "<br/>";
+        $this->load->model('Dbmodel');
+        $this->Dbmodel->insertdatatocart($userid, $username, $usermail, $productid, $productname, $price, $productimg, $description, $fromdata, $todata, $days, $pincode, $totalprice, $phonenum);
+//       $this->session->set_flashdata('status','Data Uploaded Successfull ');
+        // redirect(base_url('Managementcontrol/getthisproducts?id=<?php echo $projItem->productid; 
+//        $this->load->view('product');
+        redirect(base_url() . 'Managementcontrol/showcart?id=' . $userid);
+    }                                                                                                                                                                                                           
+    }
     public function walletpay() {
 
         $userid = $this->input->post('userid');
@@ -202,6 +279,7 @@ class Managementcontrol extends CI_Controller {
     }
 
     public function getproducts() {
+        
         $this->load->view('header');
         $this->load->model('Dbmodel');
         $sliderdata = $this->Dbmodel->getproducts();
@@ -212,17 +290,7 @@ class Managementcontrol extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function getthisproducts() {
-        $this->load->view('header');
-        $this->load->model('Dbmodel');
-        $sliderdata = $this->Dbmodel->getproducts();
-        $userdata = $this->Dbmodel->getuserdetails();
-        $data['userdata'] = $userdata;
-        $data['sliderlist'] = $sliderdata;
-
-        $this->load->view('product', $data);
-        $this->load->view('footer');
-    }
+    
 
     public function sproduct() {
         $this->load->view('header');
@@ -244,7 +312,8 @@ class Managementcontrol extends CI_Controller {
     }
 
     public function userLogout() {
-        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('userid');
+         $this->session->unset_userdata('username');
         $this->session->unset_userdata('usersurname');
         $this->session->unset_userdata('Salesemailsessname');
         $this->session->unset_userdata('Designername');
@@ -347,11 +416,15 @@ class Managementcontrol extends CI_Controller {
         $datelast = $this->input->post('datelast');
         $Transactionid = $this->input->post('Transactionid');
         $date = $this->input->post('alldate');
-
+        $productname = $this->input->post('productname');
+        $qua = $this->input->post('qua');
+      echo $productname;
+      echo $qua;
+  
 //          $pincode=$this->input->post('mat');
 //          $product=$this->input->post('product');
         $this->load->model('Dbmodel');
-        $this->Dbmodel->calcelledproduct($bookedid, $userid, $dateone, $datelast, $Transactionid, $date, $vendorid);
+        $this->Dbmodel->calcelledproduct($bookedid, $userid, $dateone, $datelast, $Transactionid, $date, $vendorid,$productname,$qua);
 
 //           $this->load->view('productinfo',$data);
         http://localhost/code/Managementcontrol/userproduct?id=35
@@ -401,12 +474,12 @@ class Managementcontrol extends CI_Controller {
         $idbookedproducts = $this->input->post('idbookedproducts');
         $check = $this->input->post('check');
         $vendorid = $this->input->post('vendorid');
-
+        
         $this->load->model('Dbmodel');
         $dat = date("Y-m-d");
         $this->Dbmodel->submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode, $idbookedproducts, $check, $dat);
-
-//           $this->load->view('productinfo',$data);
+       
+           $this->load->view('productinfo',$data);
         http://localhost/code/Managementcontrol/userproduct?id=35
         redirect(base_url() . 'Managementcontrol/Vendorhome?id=' . $vendorid);
     }
@@ -436,6 +509,36 @@ class Managementcontrol extends CI_Controller {
          $this->load->model('Dbmodel');
        
         $this->Dbmodel->submitproduct($userid, $username, $usermail, $phonenum, $productprice, $productname, $pincode, $idbookedproducts, $check, $dat,$vendorid);
+       
+        $config = array(
+            'protocol'  => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465 ,
+            'smtp_user' => 'lokesh.aapto@gmail.com',
+            'smtp_pass' => 'worknowsee123*%@',
+            'mailtype'  => 'html',
+            'charset'   => 'utf-8'
+        );
+        $this->load->library('email'); 
+        $this->email->initialize($config);
+          $this->email->set_mailtype("html");
+          $this->email->set_newline("\r\n");
+          //Email content
+           $mail = "lokeshreddy160@gmail.com";
+          $message="We will get back to you soon" ;
+          $this->email->to($to_email);
+          $this->email->from('lokesh.aapto@gmail.com','Thnaks for ENQUIRY');
+          $this->email->subject('THIS IS EMAIL FROM Ecommerce ');
+          $this->email->message($message);
+          $this->email->send();
+          
+        //  $to_email = $this->input->post($mail); 
+          if($this->email->send()) 
+         $this->session->set_flashdata("email_sent","Email sent successfully."); 
+         else 
+         $this->session->set_flashdata("email_sent","Error in sending Email."); 
+
+        
         redirect(base_url() . 'Managementcontrol/Vendorhome?id=' . $vendoridnow);
 //        $this->load->view('Vendorhome');
     }
@@ -572,5 +675,65 @@ class Managementcontrol extends CI_Controller {
 		$data['output'] = $rangereport;
 		$this->load->view('rangeouput',$data);
 	}
+        public function gotproduct(){
+            $this->load->view('header');
+            $this->load->model('Dbmodel');
+             $getsubmitproject = $this->Dbmodel->getsubmitproject();
+              $data['viewdata'] = $getsubmitproject;
+            $this->load->view('gotproduct',$data);
+        }
+        public function getreportbydatesforuser()
+	{
+		$this->load->view('header');
+		$empid= $this->input->post('id');
+		$fromdate=$this->input->post('fromdate');
+		$time = strtotime($fromdate);
+		$fromdate = date('Y-m-d',$time);
+		$enddate=$this->input->post('enddate');
+		$time = strtotime($enddate);
+		$enddate = date('Y-m-d',$time);
+//                echo $empid;
+//                echo $fromdate;
+//                echo $enddate;
+		$this->load->model('Dbmodel');
+		$rangereport =  $this->Dbmodel->getsubmitprojectfromdateuser($empid,$fromdate,$enddate);
+               
+		$data['output'] = $rangereport;
+		$this->load->view('rangeouput',$data);
+	}
+        public function TodayProducts(){
+             $this->load->view('header'); 
+        $this->load->model('Dbmodel');
+        $usercart = $this->Dbmodel->getuserproducts();
+        $calpro = $this->Dbmodel->getcalcelledproduct();
+        $pro = $this->Dbmodel->getsubmitproject();
+
+        $data['canpro'] = $calpro;
+        $data['pro'] = $pro;
+        $data['order'] = $usercart;
+        $this->load->view('hello',$data);
+        }
+        public function TomorrowProducts(){
+             $this->load->view('header');
+        $this->load->model('Dbmodel');
+        $usercart = $this->Dbmodel->getuserproducts();
+        $calpro = $this->Dbmodel->getcalcelledproduct();
+        $pro = $this->Dbmodel->getsubmitproject();
+
+        $data['canpro'] = $calpro;
+        $data['pro'] = $pro;
+        $data['order'] = $usercart;
+        $this->load->view('tomorrowproducts',$data);
+        }
+        public function inventorymangerhome() {
+             $this->load->view('header');
+             $this->load->model('Dbmodel');
+             $usercart = $this->Dbmodel->getprodutsum();
+            $calpro = $this->Dbmodel->getcancellprodsum();
+              $data['usercart'] = $usercart;
+             $data['pro'] = $calpro;
+             $this->load->view('inventorymangerhome',$data);
+        }
+        
 
 }

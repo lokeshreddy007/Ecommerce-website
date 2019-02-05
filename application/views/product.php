@@ -3952,6 +3952,7 @@ footer .socials {
 $name = $_SESSION['username'];
 $usersurname = $_SESSION['usersurname'];
 $emailsess = $_SESSION['emailsess'];
+$userid = $_SESSION['userid'];
 
 ?>
  <?php foreach($userdata as $user){ ?>

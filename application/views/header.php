@@ -123,6 +123,7 @@ body {
      <a class="active" href="<?php echo base_url();?>Managementcontrol/userlogin">userlogin Up</a>
      <a class="active" href="<?php echo base_url();?>Managementcontrol/admin">admin</a>
      <a class="active" href="<?php echo base_url();?>Managementcontrol/report?id=<?php echo $vendoridnow;?>">Report</a>
+     <a class="active" href="<?php echo base_url();?>Managementcontrol/inventorymangerhome">Inventory Manager</a>
 
   <div class="topnav-right">
 
@@ -137,6 +138,7 @@ body {
       <a href="<?php echo base_url();?>Managementcontrol/Profile?id=<?php echo $userid; ?>">Profile</a>
       <a href="<?php echo base_url();?>Managementcontrol/showcart?id=<?php echo $userid; ?>">Cart</a>  
       <a href="<?php echo base_url();?>Managementcontrol/userproduct?id=<?php echo $userid; ?>">Order History</a>  
+      <a href="<?php echo base_url();?>Managementcontrol/gotproduct?id=<?php echo $userid; ?>">Delivery Product</a>  
 
       
       <a href="<?php echo base_url();?>Managementcontrol/userLogout">Logout</a>

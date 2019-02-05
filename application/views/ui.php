@@ -154,7 +154,7 @@ if (/^\d{10}$/.test(val)) {
 
     <div class="container" style="border-style: solid; border-width: 1px;border-radius: 15px;background-color: white; width: 500px;">
         
-        <h2 style="text-align: center;">User Interface</h2>
+        <h2 style="text-align: center;">Register Here</h2>
         
   
   
@@ -249,8 +249,7 @@ if (/^\d{10}$/.test(val)) {
     <center><div class="btn-group">
          
          <button type="submit" style="margin:5px;" class="btn btn-primary">Submit</button>
-        
-          <!-- <button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/EnqueryNextPage'" style="text-align: center;margin:5px;" type="button" class="btn btn-primary">Next</button> -->
+           <button onclick="window.location.href='<?php echo base_url();?>Managementcontrol/userlogin'" style="text-align: center;margin:5px;" type="button" class="btn btn-success"> Have an account  Login</button> 
        
               
        </div>      </center>

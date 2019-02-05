@@ -157,6 +157,16 @@ public function insertdatatocart($userid,$username,$usermail,$productid,$product
 		return $query->result();
                 
     }
+    public function getproductsbyid($userid){
+          $this->db->where('productid',$userid);
+            $query=$this->db->get('product');
+            return $query->result();                
+    }
+     public function getuserdetailsbyid($userid){
+          $this->db->where('iduf',$userid);
+            $query=$this->db->get('uf');
+            return $query->result();                
+    }
     public function getvendordetails(){
         $query = $this->db->get('vendor');
         return $query->result();
@@ -246,14 +256,14 @@ public function prof()
 }
 
 
-public function calcelledproduct($bookedid,$userid,$dateone,$datelast,$Transactionid,$date,$vendorid){
+public function calcelledproduct($bookedid,$userid,$dateone,$datelast,$Transactionid,$date,$vendorid,$productname,$qua){
       $productdate = explode(",",$date);
        $num =  count($productdate);
        for($i=0;$i<$num;$i++){  
         $datepro = $productdate[$i];
         $time = strtotime($datepro);
         $datepro = date('Y-m-d',$time);
-    $sql="INSERT INTO `cancellproduct`(`bookedid`, `userid`, `dateone`, `datelast`, `Transactionid`, `vendorid`, `datelist`) VALUES ('$bookedid','$userid','$dateone','$datelast','$Transactionid','$vendorid','$datepro')";
+    $sql="INSERT INTO `cancellproduct`(`bookedid`, `userid`, `dateone`, `datelast`, `Transactionid`, `vendorid`, `datelist`, `productname`, `qua`) VALUES ('$bookedid','$userid','$dateone','$datelast','$Transactionid','$vendorid','$datepro','$productname','$qua')";
       $this->db->query($sql);   
        }
      
@@ -268,8 +278,38 @@ public function getcalcelledproduct(){
 //        SELECT * FROM sumbitproduct WHERE date >= '2019-01-22' AND date <= '2019-01-26' AND userid = 14 
         return $this->db->query($sql)->result();
     }
+    public function getsubmitprojectfromdateuser($empid,$fromdate,$enddate){
+        $sql = "SELECT * FROM sumbitproduct WHERE date >= '$fromdate'  AND date <= '$enddate' AND userid = '$empid'";
+//        SELECT * FROM sumbitproduct WHERE date >= '2019-01-22' AND date <= '2019-01-26' AND userid = 14 
+        return $this->db->query($sql)->result();
+    }
+    public function getprodutsum(){
+        $val = date("Y-m-d");                            
+        $valupdate = new DateTime($val);
+        $valfinal = $valupdate->format('Y-m-d');
+//        echo $valfinal; 
+         $twoall = new DateTime($two);
+         $twoall->modify('+1 day');
+         $pro = $twoall->format('Y-m-d');
+        $sql = "SELECT sum(quantity) as Quantity,productname FROM `bookedproducts` WHERE datelast >= '$valfinal' AND dateone <= '$valfinal' GROUP by productname";
+        return $this->db->query($sql)->result();
+    }
+    public function getcancellprodsum(){
+         $val = date("Y-m-d");                            
+        $valupdate = new DateTime($val);
+        $valfinal = $valupdate->format('Y-m-d');
+//        echo $valfinal; 
+        $sql = "SELECT sum(qua) as Quantity,productname FROM `cancellproduct` WHERE datelist = '$valfinal' GROUP by productname ";
+        return $this->db->query($sql)->result();
+    }
 
 }
+//product sum 
+//SELECT sum(quantity) as Quantity,productname FROM `bookedproducts` WHERE datelast >= '2019-02-05' AND dateone <= '2019-02-05' GROUP by productname
+//cancell product
+//SELECT * FROM `cancellproduct` WHERE datelist = '2019-02-05' 
+
+//SELECT sum(quantity) as Quantity,productname FROM `bookedproducts` GROUP by productname 
      
 //SELECT SUM(amount) FROM `wallet` WHERE userid = 12 
 //SELECT SUM(productprice) FROM `bookedproducts` WHERE userid = 12 
